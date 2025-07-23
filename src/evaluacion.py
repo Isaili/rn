@@ -86,7 +86,7 @@ def evaluar_poblacion(poblacion, catalogo, area_total, presupuesto_total, trabaj
     fitnesses = []
     for e in evaluaciones:
         if not e['valido']:
-            fitnesses.append(0)  # Penalización total
+            fitnesses.append(0)  
             continue
             
         # Ponderación de objetivos
@@ -95,8 +95,8 @@ def evaluar_poblacion(poblacion, catalogo, area_total, presupuesto_total, trabaj
         obj_tiempo = 1 - (e['tiempo_promedio'] - tiempo_min)/max(tiempo_min, 1) if tiempo_min > 0 else 1
         obj_terreno = e['uso_terreno']
         
-        # Fitness ponderado (ajusta los pesos según prioridades)
-        fitness = (0.4 * obj_ganancia + 0.3 * obj_produccion + 0.2 * obj_terreno + 0.1 * obj_tiempo)
+        # Fitness ponderado 
+        fitness = (0.2 * obj_ganancia + 0.3 * obj_produccion + 0.4 * obj_terreno + 0.1 * obj_tiempo)
         fitnesses.append(fitness)
     
     return fitnesses, evaluaciones
