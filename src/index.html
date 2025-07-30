@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGROGEN - Optimización Agronómica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2E8B57;
+            --secondary-green: #3CB371;
+            --light-green: #90EE90;
+            --background-gradient: linear-gradient(135deg, #87CEEB, #90EE90);
+            --card-bg: #F0FFF0;
+            --text-dark: #333;
+            --text-light: #006400;
+            --error-red: #DC3545;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-gradient);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            color: var(--primary-green);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--secondary-green);
+            outline: none;
+            box-shadow: 0 0 5px rgba(60, 179, 113, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--secondary-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        #results {
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        details {
+            margin: 15px 0;
+        }
+
+        summary {
+            padding: 10px;
+            background: var(--secondary-green);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        summary:hover {
+            background-color: var(--primary-green);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: rgba(224, 238, 224, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-green);
+        }
+
+        th {
+            background-color: var(--primary-green);
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-light);
+        }
+
+        tr:hover {
+            background-color: rgba(144, 238, 144, 0.3);
+        }
+
+        .resumen {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(144, 238, 144, 0.1);
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary-green);
+        }
+
+        .resumen p {
+            margin: 8px 0;
+            color: var(--text-light);
+            font-size: 1em;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--primary-green);
+            font-style: italic;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+
+        .chart-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .error {
+            color: var(--error-red);
+            text-align: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            input, button {
+                font-size: 0.9em;
+            }
+            table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AGROGEN - Optimización Agronómica <i class="fas fa-leaf"></i></h1>
+        <div class="form-group">
+            <label for="area"><i class="fas fa-ruler-combined"></i> Área total del terreno (m²):</label>
+            <input type="number" id="area" name="area" min="1" required placeholder="Ej. 5000">
+        </div>
+        <div class="form-group">
+            <label for="budget"><i class="fas fa-dollar-sign"></i> Presupuesto total disponible ($):</label>
+            <input type="number" id="budget" name="budget" min="1" required placeholder="Ej. 100000">
+        </div>
+        <button onclick="optimize()"><i class="fas fa-chart-line"></i> Optimizar Cultivos</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        async function optimize() {
+            const area = document.getElementById('area').value;
+            const budget = document.getElementById('budget').value;
+            const resultsDiv = document.getElementById('results');
+
+            if (!area || !budget) {
+                resultsDiv.innerHTML = '<p class="error">Por favor, ingresa ambos valores.</p>';
+                resultsDiv.style.display = 'block';
+                return;
+            }
+
+            resultsDiv.innerHTML = '<p class="loading"><i class="fas fa-spinner fa-spin"></i> Procesando optimización... 🌱</p>';
+            resultsDiv.style.display = 'block';
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/optimize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ area: parseFloat(area), budget: parseFloat(budget) })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    const reporte = data.reporte;
+                    // Ordenar cultivos de mayor a menor por cantidad
+                    reporte.cultivos.sort((a, b) => b.cantidad - a.cantidad);
+
+                    let html = '<p>📊 <strong>CONFIGURACIÓN ÓPTIMA DE CULTIVOS</strong></p>';
+                    html += `
+                        <details>
+                            <summary><i class="fas fa-table"></i> Ver tabla de cultivos ordenada por cantidad</summary>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Planta</th>
+                                        <th>Cantidad</th>
+                                        <th>Área (m²)</th>
+                                        <th>Producción</th>
+                                        <th>Fertilizante (unid./$)</th>
+                                        <th>Trabajadores (unid./$)</th>
+                                        <th>Ganancia ($)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+
+                    reporte.cultivos.forEach(cultivo => {
+                        html += `
+                            <tr>
+                                <td>${cultivo.nombre}</td>
+                                <td>${cultivo.cantidad}</td>
+                                <td>${cultivo.area_ocupada.toFixed(2)}</td>
+                                <td>${cultivo.produccion.toFixed(2)}</td>
+                                <td>${cultivo.fertilizante.unidades.toFixed(2)} / $${cultivo.fertilizante.costo.toFixed(2)}</td>
+                                <td>${cultivo.trabajadores.unidades.toFixed(2)} / $${cultivo.trabajadores.costo.toFixed(2)}</td>
+                                <td>$${cultivo.ganancia.toFixed(2)}</td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `
+                                </tbody>
+                            </table>
+                        </details>
+                    `;
+
+                    const resumen = reporte.resumen;
+                    html += '<div class="resumen"><p>📈 <strong>RESUMEN GENERAL</strong></p>';
+                    html += `
+                        <p>- Área total ocupada: <span class="highlight">${resumen.area_ocupada.toFixed(2)}</span> m² de ${resumen.area_total} m² (${(resumen.area_ocupada / resumen.area_total * 100).toFixed(2)}%)</p>
+                        <p>- Costo fertilizante: <span class="highlight">$${resumen.fertilizante_costo.toFixed(2)}</span></p>
+                        <p>- Costo mano de obra: <span class="highlight">$${resumen.trabajo_costo.toFixed(2)}</span></p>
+                        <p>- Trabajadores requeridos: <span class="highlight">${resumen.trabajadores.toFixed(2)}</span></p>
+                        <p>- Producción total: <span class="highlight">${resumen.produccion_total.toFixed(2)}</span> unidades</p>
+                        <p>- Ganancia bruta: <span class="highlight">$${resumen.ganancia_bruta.toFixed(2)}</span></p>
+                        <p>- Ganancia neta: <span class="highlight">$${resumen.ganancia_neta.toFixed(2)}</span></p>
+                        <p>- Tiempo promedio: <span class="highlight">${resumen.tiempo_promedio.toFixed(2)}</span> días</p>
+                        <p>- Producción por m²: <span class="highlight">${resumen.produccion_m2.toFixed(2)}</span></p>
+                        <p>- Diversificación: <span class="highlight">${resumen.tipos_utilizados}</span> tipo(s) de planta</p>
+                        <p>- Presupuesto utilizado: <span class="highlight">$${resumen.presupuesto_utilizado.toFixed(2)}</span> de $${resumen.presupuesto_total}</p>
+                    </div>`;
+
+                    // Añadir gráfico
+                    html += '<div class="chart-container"><img src="data:image/png;base64, ' + data.grafico + '" alt="Evolución del Fitness" title="Evolución del Fitness por Generación"></div>';
+
+                    resultsDiv.innerHTML = html;
+                    resultsDiv.style.display = 'block';
+                } else {
+                    resultsDiv.innerHTML = '<p class="error">' + (data.error || 'Error desconocido') + '</p>';
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = '<p class="error">Error al procesar la solicitud. Detalle: ' + error.message + '</p>';
+            }
+        }
+    </script>
+    <style>
+        .highlight {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+    </style>
+</body>
+</html>
