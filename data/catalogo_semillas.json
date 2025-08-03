@@ -1,9 +1,9 @@
 [
   {
     "nombre": "maíz",
-    "tiempo": 147,
+    "tiempo": 90,
     "rendimiento": 4.26,
-    "espacio": 1.1,
+    "espacio": 0.8,
     "fertilizante_por_planta": 1.92,
     "trabajadores_requeridos_por_planta": 0.24,
     "costo_fertilizante_unitario": 1.54,
@@ -12,9 +12,9 @@
   },
   {
     "nombre": "frijol",
-    "tiempo": 131,
+    "tiempo": 60,
     "rendimiento": 4.92,
-    "espacio": 1.59,
+    "espacio": 0.50,
     "fertilizante_por_planta": 2.11,
     "trabajadores_requeridos_por_planta": 0.25,
     "costo_fertilizante_unitario": 1.87,
@@ -541,13 +541,13 @@
   {
     "nombre": "cereza",
     "tiempo": 72,
-    "rendimiento": 7.78,
+    "rendimiento": 4.78,
     "espacio": 1.87,
     "fertilizante_por_planta": 2.0,
-    "trabajadores_requeridos_por_planta": 0.12,
-    "costo_fertilizante_unitario": 1.03,
+    "trabajadores_requeridos_por_planta": 0.72,
+    "costo_fertilizante_unitario": 1.63,
     "costo_trabajador_unitario": 23.75,
-    "ganancia_unitaria": 2.88
+    "ganancia_unitaria": 1.88
   },
   {
     "nombre": "durazno",
@@ -575,7 +575,7 @@
     "nombre": "granada",
     "tiempo": 104,
     "rendimiento": 7.5,
-    "espacio": 0.51,
+    "espacio": 0.41,
     "fertilizante_por_planta": 2.11,
     "trabajadores_requeridos_por_planta": 0.11,
     "costo_fertilizante_unitario": 1.42,

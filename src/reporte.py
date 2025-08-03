@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def generar_reporte_individuo(mejor_individuo, catalogo, area_total, presupuesto_total, trabajadores_max):
+def generar_reporte_individuo(mejor_individuo, catalogo, area_total, presupuesto_total):
     total_area = 0
     total_fertilizante = 0
     total_fertilizante_costo = 0
@@ -56,7 +56,7 @@ def generar_reporte_individuo(mejor_individuo, catalogo, area_total, presupuesto
     print(f"- Área total ocupada: {total_area:.2f} m² de {area_total} m² ({(total_area/area_total)*100:.2f}%)")
     print(f"- Costo total en fertilizante: ${total_fertilizante_costo:.2f}")
     print(f"- Costo total en mano de obra: ${total_trabajo_costo:.2f}")
-    print(f"- Trabajadores requeridos: {total_trabajadores:.2f} de {trabajadores_max}")
+    print(f"- Trabajadores requeridos: {total_trabajadores:.2f}")
     print(f"- Producción total: {total_produccion:.2f} unidades")
     print(f"- Ganancia bruta: ${total_ganancia:.2f}")
     print(f"- Ganancia neta: ${ganancia_neta:.2f}")
